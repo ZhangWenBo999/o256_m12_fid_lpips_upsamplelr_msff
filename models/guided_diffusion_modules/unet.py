@@ -15,7 +15,7 @@ from .nn import (
 
 # from module_test.msff_scsa_3579_scaler_gn1_drop02 import *
 from module_test.a22_UpSample_lp import *
-from module_test.mlla_attnres_e2 import *
+from module_test.MultiLevelSCSA_scaler3579 import *
 
 class SiLU(nn.Module):
     def forward(self, x):
@@ -426,8 +426,8 @@ class UNet(nn.Module):
                         #     use_new_attention_order=use_new_attention_order,
                         # )
                         # MultiLevelSCSA_scaler(dim=ch)
-
-                        MLLAttention(ch)
+                        MultiLevelSCSA_scaler(dim=ch)
+                        # MLLAttention(ch)
                     )
                 self.input_blocks.append(EmbedSequential(*layers))
                 self._feature_size += ch
@@ -472,8 +472,8 @@ class UNet(nn.Module):
             #     use_new_attention_order=use_new_attention_order,
             # ),
 
-            MLLAttention(ch),
-
+            # MLLAttention(ch),
+            MultiLevelSCSA_scaler(dim=ch),
             # MultiLevelSCSA_scaler(dim=ch),
             ResBlock(
                 ch,
@@ -509,7 +509,8 @@ class UNet(nn.Module):
                         #     num_head_channels=num_head_channels,
                         #     use_new_attention_order=use_new_attention_order,
                         # )
-                        MLLAttention(ch)
+                        # MLLAttention(ch)
+                        MultiLevelSCSA_scaler(dim=ch)
 
                         # MultiLevelSCSA_scaler(dim=ch)
                     )
